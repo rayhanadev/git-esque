@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/rayhanadev/git-esque/internal/repo"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +15,12 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a repository",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("init called")
+		err := repo.Init()
+        if err != nil {
+            fmt.Println("Error initializing repository:", err)
+        } else {
+            fmt.Println("Repository initialized.")
+        }
 	},
 }
 
