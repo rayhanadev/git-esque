@@ -1,7 +1,9 @@
 package repo
 
 import (
+	"fmt"
 	"os"
+	"path/filepath"
 )
 
 func Init() error {
@@ -10,7 +12,6 @@ func Init() error {
         return err
     }
 
-    // Create necessary directories and files
     dirs := []string{
         "objects",
         "refs/heads",
@@ -18,14 +19,13 @@ func Init() error {
     }
 
     for _, dir := range dirs {
-        err = os.MkdirAll(".git/"+dir, 0755)
+        err = os.MkdirAll(filepath.Join(".git", dir), 0755)
         if err != nil {
             return err
         }
     }
 
-    // Create HEAD file
-    headFile, err := os.Create(".git/HEAD")
+    headFile, err := os.Create(filepath.Join(".git", "HEAD"))
     if err != nil {
         return err
     }
@@ -36,5 +36,6 @@ func Init() error {
         return err
     }
 
+    fmt.Println("Initialized empty Git repository in .git/")
     return nil
 }

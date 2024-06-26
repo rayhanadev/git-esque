@@ -6,16 +6,30 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/rayhanadev/git-esque/internal/repo"
 	"github.com/spf13/cobra"
 )
 
 // cloneCmd represents the clone command
 var cloneCmd = &cobra.Command{
-	Use:   "clone [repository]",
+	Use:   "clone [repository] [directory]",
 	Short: "Clone a repository",
-	Args: cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Cloning repository %s...\n", args[0])
+		repoURL := args[0]
+		var directory string
+		if len(args) > 1 {
+			directory = args[1]
+		} else {
+			directory = "" // Use default directory
+		}
+
+		err := repo.Clone(repoURL, directory)
+		if err != nil {
+			fmt.Println("Error cloning repository:", err)
+		} else {
+			fmt.Println("Repository cloned.")
+		}
 	},
 }
 
