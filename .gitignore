@@ -1,0 +1,41 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of the Go coverage tool, specifically when used with LiteIDE
+*.cov
+
+# Temporary files
+*.tmp
+
+# Build directories
+_build/
+
+# Go workspace
+bin/
+pkg/
+vendor/
+
+# Dependencies
+go.sum
+
+# Logs
+*.log
+
+# IDE specific files
+.idea/
+.vscode/
+
+# macOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+
+# Build outputs
+git-esque
