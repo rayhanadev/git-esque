@@ -5,10 +5,13 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/rayhanadev/git-esque/internal/repo"
 	"github.com/spf13/cobra"
 )
+
+var branch string
 
 // cloneCmd represents the clone command
 var cloneCmd = &cobra.Command{
@@ -21,10 +24,11 @@ var cloneCmd = &cobra.Command{
 		if len(args) > 1 {
 			directory = args[1]
 		} else {
-			directory = "" // Use default directory
+			parts := strings.Split(repoURL, "/")
+			directory = strings.TrimSuffix(parts[len(parts)-1], ".git")
 		}
 
-		err := repo.Clone(repoURL, directory)
+		err := repo.Clone(repoURL, directory, branch)
 		if err != nil {
 			fmt.Println("Error cloning repository:", err)
 		} else {
@@ -35,7 +39,8 @@ var cloneCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(cloneCmd)
-
+	rootCmd.AddCommand(cloneCmd)
+	cloneCmd.Flags().StringVarP(&branch, "branch", "b", "master", "Branch to clone")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
